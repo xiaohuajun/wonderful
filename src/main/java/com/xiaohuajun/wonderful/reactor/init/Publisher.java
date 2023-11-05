@@ -1,6 +1,7 @@
 package com.xiaohuajun.wonderful.reactor.init;
 
 import org.reactivestreams.Subscriber;
+import reactor.core.publisher.FluxSink;
 
 /**
  * @author xiaohuajun
