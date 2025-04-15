@@ -2,7 +2,7 @@ package com.xiaohuajun.wonderful.design_model;
 
 /**
  * @author huawei
- * 充血模型：不仅包含的属性数据，还包含对属性的业务方法（数据+算法）更符合面向对象编程的思想
+ * 充血模型：不仅包含的属性数据，还包含对属性的业务方法、业务方法。。。。。。（数据+算法）更符合面向对象编程的思想--封装
  * 高度内聚；
  * 也可以使用在整个功能模块的设计上
  * 缺点：
@@ -32,11 +32,11 @@ public class RichDomainModel {
     }
 
     /**
-     * 处理年龄
+     * 处理年龄-业务方法
      *
      * @param age 年龄
      */
-    public void addAge(Integer age){
+    public void addAge(Integer age) {
         this.age += age + 1;
     }
 }
