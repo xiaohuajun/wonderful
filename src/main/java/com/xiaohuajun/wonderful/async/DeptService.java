@@ -59,6 +59,8 @@ public class DeptService {
             List<CategoryRespDTO> childrenTargetList = categoryRespDTO.getChildren();
             if (CollectionUtils.isEmpty(children) && CollectionUtils.isEmpty(childrenTargetList)) {
                 return categoryRespDTO.getId();
+            } else if (CollectionUtils.isEmpty(children)) {
+                return null;
             } else {
                 return compareCategory(children.get(0), childrenTargetList);
             }
@@ -73,12 +75,12 @@ public class DeptService {
                 new CategoryRespDTO(88185185203392512L, "片式电阻器 - 表面贴装", 2, 1, 88185185169838080L, null, 2, 87327933370207744L, 0, 0, 3, 3),
                 new CategoryRespDTO(118571552622077952L, "变压器配件", 2, 1, 118571552563357696L, null, 2, 87327933370207744L, null, 0, 0, 0),
                 new CategoryRespDTO(286715955886137344L, "测试变更2", 2, 1, 286715884918513664L, null, 2, 87327933370207744L, null, 1, 11, 11),
-                new CategoryRespDTO(286716040820793344L, "测试变更3", 3, 1, 286715955886137344L, null, 2, 87327933370207744L, null, 0, 11, 11),
+                new CategoryRespDTO(286716040820793344L, "测试变更34", 3, 1, 286715955886137344L, null, 2, 87327933370207744L, null, 0, 11, 11),
                 new CategoryRespDTO(89621842712593408L, "电容器", 1, 2, 0L, null, 2, 87327933370207744L, 0, 1, 158, 158),
                 new CategoryRespDTO(89612511116002304L, "电阻器网络，阵列", 2, 2, 88185185169838080L, null, 2, 87327933370207744L, 0, 0, 1, 1),
                 new CategoryRespDTO(118571552563357696L, "变压器", 1, 3, 0L, null, 2, 87327933370207744L, null, 1, 0, 0),
                 new CategoryRespDTO(154125265818356736L, "zzz", 1, 4, 0L, null, 2, 87327933370207744L, null, 1, 0, 0),
-                new CategoryRespDTO(286715884918513664L, "测试变更12", 1, 5, 0L, null, 2, 87327933370207744L, null, 1, 11, 11)
+                new CategoryRespDTO(286715884918513664L, "测试变更1", 1, 5, 0L, null, 2, 87327933370207744L, null, 1, 11, 11)
         );
     }
 
