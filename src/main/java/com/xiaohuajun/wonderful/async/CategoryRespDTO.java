@@ -1,6 +1,8 @@
 package com.xiaohuajun.wonderful.async;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
  * @author huawei
  */
 
+@Setter
+@Getter
 @Data
 public class CategoryRespDTO {
 
@@ -42,110 +46,6 @@ public class CategoryRespDTO {
         this.productNum = productNum;
         this.publicProductNum = publicProductNum;
         this.children = new ArrayList<>();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public Integer getLevelSort() {
-        return levelSort;
-    }
-
-    public void setLevelSort(Integer levelSort) {
-        this.levelSort = levelSort;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public Long getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(Long templateId) {
-        this.templateId = templateId;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Long getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgId(Long orgId) {
-        this.orgId = orgId;
-    }
-
-    public Integer getImage() {
-        return image;
-    }
-
-    public void setImage(Integer image) {
-        this.image = image;
-    }
-
-    public Integer getChildNum() {
-        return childNum;
-    }
-
-    public void setChildNum(Integer childNum) {
-        this.childNum = childNum;
-    }
-
-    public Integer getProductNum() {
-        return productNum;
-    }
-
-    public void setProductNum(Integer productNum) {
-        this.productNum = productNum;
-    }
-
-    public Integer getPublicProductNum() {
-        return publicProductNum;
-    }
-
-    public void setPublicProductNum(Integer publicProductNum) {
-        this.publicProductNum = publicProductNum;
-    }
-
-    public List<CategoryRespDTO> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<CategoryRespDTO> children) {
-        this.children = children;
     }
 
     @Override

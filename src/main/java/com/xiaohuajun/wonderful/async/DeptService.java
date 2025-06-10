@@ -20,8 +20,10 @@ public class DeptService {
         ChangeCategory changeCategory = getChangeCategory();
         List<CategoryRespDTO> categoryList = getCategoryList();
         List<CategoryRespDTO> categoryRespTree = buildCategoryTree(categoryList);
-        Long l = compareCategory(changeCategory, categoryRespTree);
-        System.out.println("============>" + l);
+        //Long l = compareCategory(changeCategory, categoryRespTree);
+        //List<ChangeCategory> changeCategoryList = getChangeCategoryList();
+        List<Long> l = getDeepestCategoryId(categoryRespTree);
+        System.out.println("============>" + l.toString());
     }
 
     private static void getFinalCategoryName(ChangeCategory changeCategory, StringBuilder fullName) {
@@ -42,6 +44,41 @@ public class DeptService {
         } else {
             return getFinalCategoryId(children.get(0));
         }
+    }
+
+
+    public static List<Long> getDeepestCategoryId(List<CategoryRespDTO> categories) {
+        List<Long> leafCategoryIds = new ArrayList<>();
+        for (CategoryRespDTO category : categories) {
+            findLeafCategoryIds(category, leafCategoryIds);
+        }
+        return leafCategoryIds;
+    }
+
+
+    private static void findLeafCategoryIds(CategoryRespDTO category, List<Long> leafCategoryIds) {
+        if (CollectionUtils.isEmpty(category.getChildren())) {
+            leafCategoryIds.add(category.getId());
+        } else {
+            for (CategoryRespDTO child : category.getChildren()) {
+                findLeafCategoryIds(child, leafCategoryIds);
+            }
+        }
+    }
+
+
+    private static Long findDeepestCategoryId(ChangeCategory category) {
+        if (CollectionUtils.isEmpty(category.getChildren())) {
+            return category.getId();
+        }
+        Long deepestId = null;
+        for (ChangeCategory child : category.getChildren()) {
+            Long id = findDeepestCategoryId(child);
+            if (deepestId == null || id != null) {
+                deepestId = id;
+            }
+        }
+        return deepestId;
     }
 
 
@@ -106,6 +143,16 @@ public class DeptService {
         return roots;
     }
 
+
+    public static List<ChangeCategory> getChangeCategoryList() {
+        ChangeCategory changeCategory = getChangeCategory();
+        ChangeCategory changeCategoryOne = getChangeCategoryOne();
+        List<ChangeCategory> changeCategoryList = new ArrayList<>();
+        changeCategoryList.add(changeCategory);
+        changeCategoryList.add(changeCategoryOne);
+        return changeCategoryList;
+    }
+
     public static ChangeCategory getChangeCategory() {
         ChangeCategory changeCategory = new ChangeCategory();
         changeCategory.setId(164433872048754700L);
@@ -126,6 +173,40 @@ public class DeptService {
         changeCategory3.setName("测试变更3");
         changeCategory3.setLevel(3);
         children2.add(changeCategory3);
+        ChangeCategory changeCategory31 = new ChangeCategory();
+        changeCategory31.setId(16443387204875446L);
+        changeCategory31.setName("测试变更31");
+        changeCategory31.setLevel(3);
+        children2.add(changeCategory31);
+        changeCategory2.setChildren(children2);
+        return changeCategory;
+    }
+
+    public static ChangeCategory getChangeCategoryOne() {
+        ChangeCategory changeCategory = new ChangeCategory();
+        changeCategory.setId(1644335333754344L);
+        changeCategory.setName("分立半导体产品");
+        changeCategory.setLevel(1);
+        //2级
+        List<ChangeCategory> children = new ArrayList<>();
+        ChangeCategory changeCategory2 = new ChangeCategory();
+        changeCategory2.setId(16443387487589901L);
+        changeCategory2.setName("二极管");
+        changeCategory2.setLevel(2);
+        children.add(changeCategory2);
+        changeCategory.setChildren(children);
+        //3级
+        List<ChangeCategory> children2 = new ArrayList<>();
+        ChangeCategory changeCategory3 = new ChangeCategory();
+        changeCategory3.setId(164433872048733269L);
+        changeCategory3.setName("稳压二极管");
+        changeCategory3.setLevel(3);
+        children2.add(changeCategory3);
+        ChangeCategory changeCategory31 = new ChangeCategory();
+        changeCategory31.setId(164433872048733221L);
+        changeCategory31.setName("整流二极管");
+        changeCategory31.setLevel(3);
+        children2.add(changeCategory31);
         changeCategory2.setChildren(children2);
         return changeCategory;
     }
