@@ -5,10 +5,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import io.micrometer.core.instrument.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -41,9 +44,28 @@ public class CompletableFuture_test {
         //JSONArray list = JSON.parseArray(s);
         //String s = "<span style='color:red'>1</span>";
         //String r = s.replaceAll("<span[^>]*>", "").replaceAll("</span>", "");
-        String u = "结果";
-        boolean chinese = isChinese(u);
-        System.out.println("list = " + chinese);
+        String value = "2.1千米/时";
+        String reg = "^([-+]?\\d*\\.?\\d+(?:/\\d+\\.?\\d+)?)([\\u4e00-\\u9fa5/]+)";
+        if (value.matches(reg)) {
+            System.out.println("单位转换成功====>" + value);
+        } else {
+            System.out.println("单位转换失败====>"+ value);
+        }
+        //正则 分离出 数值 ， 单位
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(value);
+        if (matcher.find()) {
+            String number = matcher.group(1);
+            System.out.println("数值====>" + number);
+            String unit = matcher.group(2);
+            System.out.println("单位====>" + unit);
+        }
+
+        BigDecimal fahrenheit = new BigDecimal(67);
+        BigDecimal celsius = fahrenheit.subtract(new BigDecimal("32")).multiply(new BigDecimal("5")).divide(new BigDecimal("9"), 4, RoundingMode.HALF_UP);
+        String plainString = celsius.stripTrailingZeros().toPlainString();
+        // boolean chinese = isChinese(u);
+        System.out.println("list = " + plainString);
     }
 
     private static boolean isValidGrade(String partNumber) {
