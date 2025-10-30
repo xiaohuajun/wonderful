@@ -90,18 +90,20 @@ public class PolymorphismT {
 
 
     public static void main(String[] args) {
+
         /*String text = "耐磨铜合金；主要用于继电器簧片、56Gbps高速连接器\u200C、轴承衬套、同步器齿环\u200C、船舶阀门、化工泵体。";
         System.out.println("原始长度: " + text.length());
         String cleaned = removeHiddenChars(text);*/
         //System.out.println("清理后: " + cleaned);
-        String k = "1mr";
-        //boolean match = isSpecialGrade(k);
+        String k = "电压Ω";
+        boolean match = matchPk(k);
         //Set<String> keywords = transformKeyword(k);
         //Date date = add(new Date(), 5,-1);
         //格式化日期
         //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String key = matchKey(k);
-        System.out.println("匹配是否查询属性: " + key);
+        //String key = matchKey(k);
+        //String matchPk = matchKeyPlus(k);
+        //System.out.println("匹配是否查询属性: " + matchPk);
     }
 
     public static Date add(Date date, int calendarField, int amount) {
@@ -114,6 +116,7 @@ public class PolymorphismT {
             return c.getTime();
         }
     }
+
 
     private static String matchKey(String keyword) {
         Pattern pattern = Pattern.compile("^(\\d+(?:\\.\\d+)?)([kKmM][rR]?|[rR])$");
@@ -137,8 +140,45 @@ public class PolymorphismT {
         return keyword;
     }
 
+    private static String matchKeyPlus(String keyword) {
+        Pattern pattern = Pattern.compile("^(\\d+(?:\\.\\d+)?)([uU][FfHhAaVv])$");
+        Matcher matcher = pattern.matcher(keyword);
+        if (matcher.find()) {
+            String number = matcher.group(1);
+            String unit = matcher.group(2);
+            if ("uf".equalsIgnoreCase(unit)) {
+                return number + "μF";
+            }
+            if ("uh".equalsIgnoreCase(unit)) {
+                return number + "μH";
+            }
+            if ("ua".equalsIgnoreCase(unit)) {
+                return number + "μA";
+            }
+            if ("uv".equalsIgnoreCase(unit)) {
+                return number + "μV";
+            }
+        }
+        return keyword;
+    }
+
     private static boolean match(String keyword) {
         return keyword.matches("^(?!\\d+$)(?:[\\u4e00-\\u9fa5a-zA-Z]+\\s*[:：=]?\\s*)?\\d+(?:\\.\\d+)?(?:[a-zA-Z\\u4e00-\\u9fa5%‰±⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺·/]+)?$");
+    }
+
+    private static boolean matchPk(String keyword) {
+        String reg = "^(?<keyword>电阻|电容|电感|电压|电流|功率|频率|温度|耐压|电阻值|电容值|电感值|精度|误差|容量|存储|内存|闪存|缓存|空间|高度|宽度|长度)[：:]?\\s*(?<value>-?\\d+(?:\\.\\d+)?)(?<unit>[pPnNuUμmMkKG]?[ΩRrFfHhVvAaWw%]|[kKmMgG]?[hH][zZ]|°?C|℃|[TtGgMmKk]?[Bb]|[cCmM][mM])$";
+        Matcher matcher = Pattern.compile(reg).matcher(keyword);
+        if (matcher.find()) {
+            String keywordGroup = matcher.group("keyword");
+            String valueGroup = matcher.group("value");
+            String unitGroup = matcher.group("unit");
+            System.out.println("keyword: " + keywordGroup);
+            System.out.println("value: " + valueGroup);
+            System.out.println("unit: " + unitGroup);
+            return true;
+        }
+        return false;
     }
 
     private static boolean isSpecialGrade(String keyword) {
@@ -162,6 +202,8 @@ public class PolymorphismT {
         } else {
             return input;
         }
+
+
     }
 
 
